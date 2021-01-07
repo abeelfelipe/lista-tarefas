@@ -1,0 +1,144 @@
+<h1 class="mt-4">Lista de Tarefas</h1>
+<ol class="breadcrumb mb-4">
+    <li class="breadcrumb-item active">Cadastro</li>
+</ol>
+<div class="container">
+    <form>
+        <div class="row" >
+            <div class="col-md-12">
+                <div class="alert alert-success" role="alert" *ngIf="sucesso == true">
+                    Lista salva/atualizada com sucesso!
+                </div>
+                <div class="alert alert-danger" role="alert" *ngIf="mensagemErro != ''">
+                    {{ mensagemErro }}
+                </div>
+            </div>
+        </div>
+        <div class="row" *ngIf="listaTarefa.id">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>ID:</label>
+                    <input type="text" class="form-control" [ngModel]="listaTarefa.id" name="id" disabled=true/>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Data Cadastro:</label>
+                    <input type="text" class="form-control" [ngModel]="listaTarefa.dataCadastro" name="dataCadastro" disabled=true/>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-9">
+                <div class="form-group">
+                    <label>Nome da lista: *</label>
+                    <input type="text" class="form-control" [(ngModel)]="listaTarefa.nome" name="nome"/>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2">
+                <div class="form-group">
+                    <button type="submit" class="btn btn-success" (click)="salvarLista()">
+                        <i class="fa fa-save"></i> Salvar Lista
+                    </button>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <button type="button" class="btn btn-danger ml-1" (click)="voltarParaListagem()">
+                        <i class="fa fa-arrow-alt-circle-left"></i> Voltar
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <h3>Tarefas</h3>
+                <div class="row">
+                    <div class="col-md-9">
+                        <div class="form-group">
+                            <label></label>
+                            <input type="text" class="form-control" [(ngModel)]="novaTarefa.nomeTarefa" name="nomeTarefa"/>
+                        </div>
+                    </div>
+                    <div class="col md-3">
+                        <br/>
+                        <button (click)="adicionar()" type="button" class="btn btn-primary">
+                            <i class="fa fa-plus"></i> Adicionar Tarefa
+                        </button>
+                    </div>
+                </div>
+                <table class="table table-condensed table-hover">
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>Concluído</th>
+                            <th>Data Ult. Alteração</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let tarefa of tarefas">
+                            <td>
+                                <div *ngIf="tarefa.concluido">
+                                    <span style="text-decoration: line-through">{{tarefa.nomeTarefa}}</span>
+                                </div>
+                                <div *ngIf="!tarefa.concluido">
+                                    <span>{{tarefa.nomeTarefa}}</span>
+                                </div>
+                            </td>
+                            <td>
+                                <input type="checkbox" [checked]="tarefa.concluido" (click)="alterarStatus(tarefa)">
+                            </td>
+                            <td>{{tarefa.dataUltimaAlteracao}}</td>
+                            <td><button class="btn btn-info"  data-toggle="modal" data-target="#modalAlteracao" (click)="preparaTarefa(tarefa)">
+                                    <i class="fa fa-edit"></i>
+                                </button>
+                                <button class="btn btn-danger ml-1" data-toggle="modal" data-target="#modalDelecao" (click)="preparaTarefa(tarefa)">
+                                    <i class="fa fa-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div id="modalDelecao" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5>Confirmação</h5>
+                    </div>
+                    <div class="modal-body" *ngIf="tarefaSelecionada">
+                        Tem certeza que deseja excluir a tarefa  <b>{{tarefaSelecionada.nomeTarefa}}</b>?
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-success" (click)="deletarTarefa(tarefaSelecionada)" data-dismiss="modal">Confirmar</button>
+                        <button class="btn btn-primary" data-dismiss="modal">Cancelar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="modalAlteracao" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5>Alteração</h5>
+                    </div>
+                    <div class="modal-body" *ngIf="tarefaSelecionada">
+                        Digite abaixo o novo nome da tarefa <b>{{tarefaSelecionada.nomeTarefa}}</b>?
+                        <input type="text" class="form-control" [(ngModel)]="tarefaSelecionada.nomeTarefa" name="nomeTarefa"/>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-success" (click)="alterarTarefa(tarefaSelecionada)" data-dismiss="modal">Confirmar</button>
+                        <button class="btn btn-primary" data-dismiss="modal">Cancelar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </form>
+</div>

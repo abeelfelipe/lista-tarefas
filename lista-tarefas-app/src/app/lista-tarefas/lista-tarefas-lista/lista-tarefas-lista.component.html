@@ -1,0 +1,38 @@
+<h1 class="mt-4">Lista de Tarefas</h1>
+<ol class="breadcrumb mb-4">
+    <li class="breadcrumb-item active">Cadastro</li>
+</ol>
+<div class="container">
+    <div class="row">
+        <div class="col-md-2">
+            <button class="btn btn-primary" (click)="novoCadastro()">
+                <i class="fa fa-plus"></i> Novo
+            </button>
+        </div>
+    </div>
+    <br/>
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table table-condensed table-hover">
+                <thead>
+                    <th>Id</th>
+                    <th>Nome da Lista</th>
+                    <th>Data de cadastro</th>
+                    <th></th>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let lista of listasTarefa">
+                        <td>{{lista.id}}</td>
+                        <td>{{lista.nome}}</td>
+                        <td>{{lista.dataCadastro}}</td>
+                        <td>
+                            <button class="btn btn-info" routerLink="/lista-tarefas-form/{{lista.id}}">
+                                <i class="fa fa-edit"></i>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

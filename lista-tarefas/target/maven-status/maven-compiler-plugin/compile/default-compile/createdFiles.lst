@@ -1,0 +1,11 @@
+com\listaTarefas\model\repository\ListaTarefasRepository.class
+com\listaTarefas\rest\dto\TarefaDTO.class
+com\listaTarefas\model\entity\ListaTarefas$ListaTarefasBuilder.class
+com\listaTarefas\rest\ListaTarefasController.class
+com\listaTarefas\model\entity\ListaTarefas.class
+com\listaTarefas\model\entity\Tarefa.class
+com\listaTarefas\rest\TarefaController.class
+com\listaTarefas\config\SwaggerConfig.class
+com\listaTarefas\ListaTarefasApplication.class
+com\listaTarefas\model\repository\TarefaRepository.class
+com\listaTarefas\model\entity\Tarefa$TarefaBuilder.class

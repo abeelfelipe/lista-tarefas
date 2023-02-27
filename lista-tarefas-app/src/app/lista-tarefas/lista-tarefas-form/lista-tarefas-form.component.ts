@@ -3,7 +3,7 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 import { Observable, onErrorResumeNext } from 'rxjs';
 import { ListaTarefasService } from 'src/app/lista-tarefas.service';
 import { TarefaService } from 'src/app/tarefa.service';
-import { ListaTarefas } from '../ListaTarefas';
+import { ListaTarefas } from '../../model/ListaTarefas';
 import { Tarefa } from '../Tarefa';
 
 @Component({

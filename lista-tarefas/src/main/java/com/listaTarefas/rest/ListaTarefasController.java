@@ -2,9 +2,11 @@ package com.listaTarefas.rest;
 
 import com.listaTarefas.model.entity.ListaTarefas;
 import com.listaTarefas.model.repository.ListaTarefasRepository;
+import com.listaTarefas.service.ListaTarefasService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.service.spi.InjectService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -19,50 +21,38 @@ import java.util.List;
 @Api(value="API Lista de Tarefas - Lista de Tarefas")
 public class ListaTarefasController {
 
-    private final ListaTarefasRepository repository;
+    private final ListaTarefasService service;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     @ApiOperation(value = "Salva uma lista de tarefas")
     public ListaTarefas salvar(@RequestBody @Valid ListaTarefas listaTarefas) {
-        return repository.save(listaTarefas);
+        return service.salvar(listaTarefas);
     }
 
     @GetMapping("{id}")
     @ApiOperation(value = "Consulta uma lista de tarefas por ID")
     public ListaTarefas consultarPorId(@PathVariable Integer id) {
-        return repository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        return service.findById(id.toString());
     }
 
     @GetMapping
     @ApiOperation(value = "Consulta todas as lista de tarefas existentes")
     public List<ListaTarefas> obterTodasAsListas(){
-         return repository.findAll();
+        return service.findAll();
     }
 
     @DeleteMapping("{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @ApiOperation(value = "Deleta uma lista de terefas")
     public void deletar(@PathVariable Integer id) {
-        repository.
-                findById(id).
-                map(listaTarefas -> {
-                    repository.delete(listaTarefas);
-                    return Void.TYPE;
-                }).
-                orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        service.excluir(id);
     }
 
     @PutMapping("{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @ApiOperation(value = "Altera uma lista de Tarefas")
-    public void alterar(@PathVariable Integer id, @RequestBody @Valid ListaTarefas ListaTarefasAtualizada) {
-        repository.
-                findById(id).
-                map(listaTarefas -> {
-                    ListaTarefasAtualizada.setId(listaTarefas.getId());
-                    return repository.save(ListaTarefasAtualizada);
-                }).
-                orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+    public void alterar(@PathVariable Integer id, @RequestBody @Valid ListaTarefas listaTarefasAtualizada) {
+        service.alterar(id, listaTarefasAtualizada);
     }
 }

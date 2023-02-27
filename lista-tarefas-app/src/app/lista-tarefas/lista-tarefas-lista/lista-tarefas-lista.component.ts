@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ListaTarefasService } from 'src/app/lista-tarefas.service';
-import { ListaTarefas } from '../ListaTarefas';
+import { ListaTarefas } from '../../model/ListaTarefas';
 import { Router } from '@angular/router';
 import { Tarefa } from '../Tarefa';
 import { TarefaService } from 'src/app/tarefa.service';
